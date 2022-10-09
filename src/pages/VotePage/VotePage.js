@@ -17,17 +17,27 @@ const VotePage = () => {
     const choicesFromStore = useSelector((state) => selectPollChoices(state,pollId))
     const loadingStatus = useSelector((state)=> selectPollsStatus(state))
     const [choices, setChoices] = useState(choicesFromStore)
+    const [voters, setVoters] = useState([])
     const [openModal, setOpenModal] = useCycle(false,true)
     const userId = useSelector((state)=> selectUserId(state))
+    const [justVoted, setVoted] = useState(false)
     
     const handleConfirmation = () => {
-        dispatch(updatePoll({vote:choices, pollId: pollId, voter:userId}))
+        if (!voters.includes(userId) && !justVoted){
+            console.log('voters',voters)
+            console.log('userId',userId)
+            setVoted(true)
+            dispatch(updatePoll({vote:choices, pollId: pollId, voter:userId}))
+        }
         // dispatch(addVote({vote:choices,pollId: pollId}))
         setOpenModal()
     }
 
     useEffect(() => {
-        dispatch(fetchSinglePoll(pollId)).unwrap().then( poll=> {setChoices(poll.choices)})
+        dispatch(fetchSinglePoll(pollId)).unwrap().then( poll=> {
+            setChoices(poll.choices)
+            setVoters(poll.voters)
+        })
         .catch(err=> console.log(err))
         window.scrollTo(0,0)
       }, [dispatch])

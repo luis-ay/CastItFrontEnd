@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import axios from 'axios';
 
-const POLLS_URL = 'http://192.168.1.20:5000'
+const POLLS_URL = 'https://castit-backend.herokuapp.com'
 
 const initialState = {
     polls:[],
