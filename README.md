@@ -1,2 +1,3 @@
 # CastIt
-Small FullStack Project MERN stack
+Frontent of FullStack Project (MERN stack):
+Uses react, redux, tailwind, axios
