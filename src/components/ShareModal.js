@@ -48,7 +48,7 @@ const ShareModal = ({title, pollId, isVisible, handleClose, vote}) => {
 
     const share = {
         title: 'Vote on My CastIt Poll',
-        url: `https://192.168.1.20:3000/vote/${pollId}`,
+        url: `https://castit.netlify.app/#/vote/${pollId}`,
         text: 'Vote on My CastIt Poll',
     }
 

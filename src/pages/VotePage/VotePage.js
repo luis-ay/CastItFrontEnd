@@ -2,7 +2,7 @@ import { useSelector, useDispatch } from "react-redux"
 import { Reorder, useCycle } from "framer-motion";
 import { useEffect, useState } from "react";
 import Choice from "./Choice"
-import { addVote , selectPollChoices, updatePoll, fetchSinglePoll, selectPollsStatus } from '../../features/pollsSlice'
+import { addVote , selectPollChoices, updatePoll, fetchSinglePoll, selectPollsStatus, selectPollTitle } from '../../features/pollsSlice'
 import { motion } from "framer-motion";
 import ShareModal from '../../components/ShareModal'
 import { useParams } from "react-router-dom";
@@ -21,6 +21,7 @@ const VotePage = () => {
     const [openModal, setOpenModal] = useCycle(false,true)
     const userId = useSelector((state)=> selectUserId(state))
     const [justVoted, setVoted] = useState(false)
+    const [title, selectTitle] = useState('')
     
     const handleConfirmation = () => {
         if (!voters.includes(userId) && !justVoted){
@@ -37,6 +38,7 @@ const VotePage = () => {
         dispatch(fetchSinglePoll(pollId)).unwrap().then( poll=> {
             setChoices(poll.choices)
             setVoters(poll.voters)
+            selectTitle(poll.title)
         })
         .catch(err=> console.log(err))
         window.scrollTo(0,0)
@@ -52,6 +54,7 @@ const VotePage = () => {
             <h1 className="font-Poppins font-semibold text-4xl tracking-wide text-black mb-8 pb-2 border-b-4 border-gray-200 w-1/2 mx-auto">Vote</h1>
             {((loadingStatus === 'succeeded')) ?  
                 <>
+                    <p className='text-3xl text-[#EC3E3E] font-bold tracking-wide pt-4'>{title}</p>
                     <p className="font-sans-serif font-thin text-xl text-gray-500">Drag and Drop to Rank Choices</p>
                     <div className="flex justify-center items-center w-9/12 mx-auto mt-6 mb-6">
                         <div className="flex-col">

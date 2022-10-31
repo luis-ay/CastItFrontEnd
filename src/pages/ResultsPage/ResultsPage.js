@@ -46,7 +46,7 @@ const ResultsPage = () => {
     
     const share = {
         title: 'Check out my CastIt Poll',
-        url: `https://192.168.1.20:3000/vote/${pollId}`,
+        url: `https://castit.netlify.app/#/vote/${pollId}`,
         text: 'Check out my CastIt Poll',
     }
 
